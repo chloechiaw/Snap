@@ -48,7 +48,7 @@ const Scene = () => {
     const fileName = `output_${number
       .toString()
       .padStart(5, "0")}_img_depth.png`;
-    console.log(`${basePath}/${fileName}`);
+    // console.log(`${basePath}/${fileName}`);
     return `${basePath}/${fileName}`;
   };
 
@@ -118,16 +118,15 @@ const Scene = () => {
   const animation = (time) => {
     if (!startTime.current) startTime.current = time;
     const elapsedTime = time - startTime.current;
-    const targetFrame = Math.floor(elapsedTime / (1000 / 15));
-
+    const frameDuration = 1000 / 15; // Duration per frame in milliseconds
     const totalNumberOfImages = 10;
 
-    if (
-      targetFrame !== currentFrameIndex.current &&
-      targetFrame < totalNumberOfImages
-    ) {
+    const targetFrame =
+      (Math.floor(elapsedTime / frameDuration) % totalNumberOfImages) + 1;
+
+    if (targetFrame !== currentFrameIndex.current) {
       currentFrameIndex.current = targetFrame;
-      loadNewImage(currentFrameIndex.current % totalNumberOfImages);
+      loadNewImage(currentFrameIndex.current);
     }
 
     renderer.render(scene.current, camera.current);
