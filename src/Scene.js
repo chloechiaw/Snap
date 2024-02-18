@@ -2,10 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
 import * as THREE from "three";
-import myimage from "/Users/chloechia/sceneproject/scene/src/party_img_depth.png";
 
 const Scene = () => {
-  const directory = "/depthmaps";
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   const scene = useRef(new THREE.Scene());
   const mesh = useRef(null);
@@ -44,7 +42,7 @@ const Scene = () => {
   };
 
   const generateFilePath = (number) => {
-    const basePath = `${process.env.PUBLIC_URL}/depthmaps`;
+    const basePath = `${process.env.PUBLIC_URL}/depthmaps2`;
     const fileName = `output_${number
       .toString()
       .padStart(5, "0")}_img_depth.png`;
@@ -57,6 +55,7 @@ const Scene = () => {
     console.log(imagePath);
     const image = new Image();
     image.onload = () => {
+      console.log("hit");
       createTexturesAndApply(image);
     };
     image.src = imagePath;
@@ -119,7 +118,7 @@ const Scene = () => {
     if (!startTime.current) startTime.current = time;
     const elapsedTime = time - startTime.current;
     const frameDuration = 1000 / 15; // Duration per frame in milliseconds
-    const totalNumberOfImages = 10;
+    const totalNumberOfImages = 9;
 
     const targetFrame =
       (Math.floor(elapsedTime / frameDuration) % totalNumberOfImages) + 1;
